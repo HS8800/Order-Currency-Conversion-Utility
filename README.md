@@ -32,6 +32,19 @@ This second example converts the currency of order (id = 2) into GBP
 ```
 symfony console app:order-rate 2 GBP
 ```
+output
+```xml
+	<order>
+		<id>2</id>
+		<currency>GBP</currency>
+		<date>02/01/2022</date>
+		<products>
+			<product title="GHD Hair Straighteners" price="80"/>
+			<product title="Redken Shampure Shampoo" price="16"/>
+		</products>
+		<total>95.99</total>
+	</order>
+```
 
 
 
