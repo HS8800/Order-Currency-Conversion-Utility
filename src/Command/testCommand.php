@@ -24,7 +24,8 @@ class TestCommand extends Command
     {
         $this->setDescription('Order Currency Converter')
             ->addArgument('orderId', InputArgument::REQUIRED, 'Id of order to apply currency conversion')
-            ->addArgument('outputCurreny', InputArgument::REQUIRED, 'Symbol of currency to convert to');
+            ->addArgument('outputCurreny', InputArgument::REQUIRED, 'Symbol of currency to convert to')
+            ->addArgument('debug', InputArgument::OPTIONAL, 'Used to disable file creation for testing',false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -39,8 +40,8 @@ class TestCommand extends Command
         //get params
         $orderId = $input->getArgument('orderId');
         $outputCurreny = $input->getArgument('outputCurreny');
-
-
+        
+        
         //find order
         $order = $this->getOrder($orderId,$xmlOrder);
         if(!$order){
@@ -62,20 +63,22 @@ class TestCommand extends Command
         $order[0]->currency = $outputCurreny;
         $order[0]->total = ceil(($order[0]->total*(double)$exRate) * 100) / 100;
 
-        //output order to xml file
-        $myfile = fopen(__DIR__."/../../xmlOutput/CurrencyExchangedOrder.xml", "w") or die("Unable to open file!");
-        $txt = chr(9).$order[0]->asXML();
-        fwrite($myfile, $txt);
-        fclose($myfile);
 
+        if(!$input->getArgument('debug')){
+            //output order to xml file
+            $myfile = fopen(__DIR__."/../../xmlOutput/CurrencyExchangedOrder.xml", "w") or die("Unable to open file!");
+            $txt = chr(9).$order[0]->asXML();
+            fwrite($myfile, $txt);
+            fclose($myfile);
+
+            //open file
+            popen(__DIR__."/../../xmlOutput/CurrencyExchangedOrder.xml",'r');
+        }
+    
         Echo "\n";
         Echo "Order id " .$orderId." succesfully converted to " . $outputCurreny;
         Echo "\nLocation: " . __DIR__."/../../xmlOutput/CurrencyExchangedOrder.xml";
         Echo "\n";
-
-        //open file
-        popen(__DIR__."/../../xmlOutput/CurrencyExchangedOrder.xml",'r');
-
 
 
         return Command::SUCCESS;

@@ -1,10 +1,10 @@
 	<order>
-		<id>2</id>
-		<currency>GBP</currency>
-		<date>02/01/2022</date>
+		<id>1</id>
+		<currency>EUR</currency>
+		<date>01/01/2022</date>
 		<products>
-			<product title="GHD Hair Straighteners" price="80"/>
-			<product title="Redken Shampure Shampoo" price="16"/>
+			<product title="Rimmel Lasting Finish Lipstick 4g" price="5.49"/>
+			<product title="Sebamed Shampoo 200ml" price="5.49"/>
 		</products>
-		<total>95.99</total>
+		<total>10.98</total>
 	</order>
